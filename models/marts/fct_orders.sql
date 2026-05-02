@@ -66,9 +66,9 @@ final as (
         )                                           as days_before_estimated,
 
         -- order metrics
-        order_items_aggregated.item_count,
-        order_items_aggregated.revenue,
-        order_items_aggregated.freight_cost,
+        coalesce(order_items_aggregated.item_count, 0)      as item_count,
+        coalesce(order_items_aggregated.revenue, 0)         as revenue,
+        coalesce(order_items_aggregated.freight_cost, 0)    as freight_cost,
 
         -- payment metrics
         order_payments_aggregated.total_payment_value,

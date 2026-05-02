@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Order-level fact table containing delivery metrics, revenue and review scores."
+    columns:
+      - name: order_id
+        description: "Unique order identifier"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Customer identifier"
+        tests:
+          - not_null
+      - name: revenue
+        description: "Total order revenue excluding freight costs"
+        tests:
+          - not_null
+
+  - name: fct_order_items
+    description: "Order item-level fact table. One row per product per order."
+    columns:
+      - name: order_id
+        description: "Order identifier"
+        tests:
+          - not_null
+      - name: order_item_id
+        description: "Sequential item number within an order"
+        tests:
+          - not_null
+      - name: price
+        description: "Product price"
+        tests:
+          - not_null
+
+  - name: dim_customers
+    description: "Customer dimension table. One row per customer_id."
+    columns:
+      - name: customer_id
+        description: "Customer identifier per order - one person can have multiple customer_ids"
+        tests:
+          - unique
+          - not_null
+      - name: customer_unique_id
+        description: "True person identifier - consistent across multiple orders"
+        tests:
+          - not_null
+
+  - name: dim_sellers
+    description: "Seller dimension table. One row per seller."
+    columns:
+      - name: seller_id
+        description: "Unique seller identifier"
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_products
+    description: "Product dimension table. One row per product."
+    columns:
+      - name: product_id
+        description: "Unique product identifier"
+        tests:
+          - unique
+          - not_null
